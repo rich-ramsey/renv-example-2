@@ -66,7 +66,7 @@ renv::snapshot()
 ```
 
 
-close down and restore??
+close down and restore. Yes, all worked well.
 
 
 
@@ -81,8 +81,24 @@ if (!require("install.load")){install.packages("install.load")}
 install_load("brms")
 ```
 
+## run a simple model using brms ##
+
+```{r}
+b1 <- brm(mpg ~ 1 + hp,
+          data = data, family = gaussian,
+          file = "models/b1")
+summary(b1)
+```
+
 ## take a snapshot ##
 
 ```{r}
 renv::snapshot()
+```
+
+
+## print session info ##
+
+```{r session-info}
+sessionInfo()
 ```
