@@ -1,0 +1,27 @@
+---
+title: "notes"
+author: "Richard Ramsey"
+date: '2022-05-11'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This file tries to describe the process of using renv with git.
+
+
+1. Describe basic usage here. tbc
+
+2. A few settings need changing by adding the below to the .Rprofile file. Namely:
+
+options(renv.settings.vcs.ignore.local = "FALSE") 
+
+<!-- this stops ignoring local files and means that the renv.lock file will also be inder version control -->
+
+renv::settings$snapshot.type("all") 
+
+<!-- this means that all packages are recorded in snapshot, rather than the default, which is clever and uses renv::dependencies, but may also miss things. Hence, opt for the conservative approach. -->
+
+Now when the project starts these settings are implemented.
