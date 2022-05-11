@@ -98,6 +98,31 @@ renv::snapshot()
 
 Yes, all seems to work ok and the renv.lock file is updated, git tracks the change and we push it to GitHub.
 
+
+## try install a new package and update renv.lock ##
+
+```{r}
+# install or load packages
+options(repos="https://cran.rstudio.com" )
+if (!require("install.load")){install.packages("install.load")} 
+install_load("sjPlot")
+```
+
+make a table 
+
+```{r}
+tab_df(data,
+       alternate.rows = T,
+       title="Table title",
+       file="tables/test_table.doc")
+```
+
+## take a snapshot ##
+
+```{r}
+renv::snapshot()
+```
+
 ## print session info ##
 
 ```{r session-info}
