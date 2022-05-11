@@ -123,6 +123,26 @@ tab_df(data,
 renv::snapshot()
 ```
 
+
+Feedback - sjPlot was already installed so renv.lock did not need to uopdate.
+
+## try install another new package and update renv.lock ##
+
+```{r}
+# install or load packages
+options(repos="https://cran.rstudio.com" )
+if (!require("install.load")){install.packages("install.load")} 
+install_load("tidybayes")
+```
+
+## take a snapshot ##
+
+```{r}
+renv::snapshot()
+```
+
+
+
 ## print session info ##
 
 ```{r session-info}
