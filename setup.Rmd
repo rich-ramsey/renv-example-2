@@ -27,7 +27,7 @@ renv::restore()
 
 ## load packages that we will be using ##
 
-first time 
+first time, load some packages (and then later, load a new package just to test functionality)
 
 ```{r}
 # install or load packages
@@ -36,7 +36,7 @@ if (!require("install.load")){install.packages("install.load")}
 install_load("here", "tidyverse", "RColorBrewer", "patchwork")
 ```
 
-## do some coding ##
+## do some wrangling ##
 
 ```{r load-some-data}
 data <- as_tibble(mtcars) %>% 
@@ -66,13 +66,13 @@ renv::snapshot()
 ```
 
 
-close down and restore. Yes, all worked well.
+close down and renv::restore(). Yes, all worked well.
 
 
 
 ## load an additional package ##
 
-second time, when the packages will be updated.
+second time, when the packages will be updated via the addition of brms.
 
 ```{r}
 # install or load packages
@@ -96,6 +96,7 @@ summary(b1)
 renv::snapshot()
 ```
 
+Yes, all seems to work ok and the renv.lock file is updated, git tracks the change and we push it to GitHub.
 
 ## print session info ##
 
