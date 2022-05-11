@@ -9,25 +9,84 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This file tries to describe the process of using renv with git.
-
-See here for notes on collaborating with renv and git: https://rstudio.github.io/renv/articles/collaborating.html
+This file tries to describe the process of using renv with git for version control.
 
 
-1. Describe basic usage here. tbc
+1. Some general notes. 
 
-2. A few settings need changing by adding the below to the .Rprofile file. Namely:
+See these resources for an intro and general background to renv, which should give a really clear outline:
+
+https://rstudio.github.io/renv/articles/renv.html
+
+https://www.youtube.com/watch?v=yjlEbIDevOs
+
+See here for notes on collaborating with renv and git:
+
+https://rstudio.github.io/renv/articles/collaborating.html
+
+And this is a fantastic tutorial on using git and github:
+
+https://journals.sagepub.com/doi/10.1177/2515245918754826
+
+
+2. Describe basic usage.
+
+Ok, so my current workflow is as follows:
+
+- create a new R project and tick the 'renv' and 'git' buttons. This sets up the project in such a way that it is ready for renv and version control via git.
+
+- edit the .Rprofile file (see point 3 below) to amend the default settings.
+
+- create a readme text file.
+
+- create a license text file (see MIT licence as git recommends it as a starting point).
+
+- create a new repository on github via github's website or the terminal. I use the website typically as it is very easy.
+
+- link the project folder to the github repository in the terminal e.g., 
+$ git remote add origin https://github.com/rich-ramsey/renv-example-2.git
+
+- push the folder to the git repository in the terminal e.g., 
+$ git push -u origin master
+
+- now work as normal in R Studio and make periodic commits (probably on a twice daily basis or some such) and push those changes to GitHub via the Git panel in R studio. This part is really easy and user friendly.
+
+The outcome *should* be that all files and folders (including the renv.lock file) that are not set to be ignored should be version controlled and pushed to GitHub whenever necessary.
+
+3. A few settings need changing by adding the below to the .Rprofile file. Namely:
 
 options(renv.settings.vcs.ignore.local = "FALSE") 
 
-<!-- this stops ignoring local files and means that the renv.lock file will also be inder version control -->
+<!-- this stops ignoring local files and means that the renv.lock file will also be under version control -->
 
 renv::settings$snapshot.type("all") 
 
-<!-- this means that all packages are recorded in snapshot, rather than the default, which is clever and uses renv::dependencies, but may also miss things. Hence, opt for the conservative approach. -->
+<!-- this means that all packages are recorded in snapshot, rather than the default, which is clever and uses renv::dependencies, but may also miss things. Hence, opt for the conservative approach and select all. -->
 
 Now when the project starts these settings are implemented.
 
-3. Something to remember - depending on the snapshot settings, renv.lock will not actually make any changes, even though the file has been updated. e.g., the file has been updated, but no packages have actually changed. Therefore, git will not recognise this as a change because it isn't. 
+4. Something to remember - depending on the snapshot settings, renv.lock will not actually make any changes, even though the file has been updated. e.g., the file has been updated and it says it has been modified in the file viewer, but no packages have actually changed (it has just re-listed the same packages as before). Therefore, git will not recognise this as a change because nothing has actually changed, even though the file has been modified. 
 
-I have sometimes found this confusing, such that I thought it was not interfacing properly with git.
+I have sometimes found this confusing, such that I thought it was not interfacing properly with git, but actually, the file was not being modified so there was no reason to suggest that changes needed to be committed.
+
+5. What about collaborating and sharing projects? 
+https://rstudio.github.io/renv/articles/collaborating.html
+
+The below is taken from the above wesbite:
+
+    - Select a way to share your project sources. We recommend using a version control system alongside a public repository; e.g. git with GitHub, but many other options are available.
+
+    - One user (perhaps yourself) should explicitly initialize renv in the project, via renv::init(). This will create the initial renv lockfile, and also write the renv auto-loaders to the project’s .Rprofile and renv/activate.R. These will ensure the right version of renv is downloaded and installed for your collaborators when they start in this project.
+
+    - Share your project sources, alongside the generated lockfile renv.lock. Be sure to also share the generated auto-loaders in .Rprofile and renv/activate.R.
+
+    - When a collaborator first launches in this project, renv should automatically bootstrap itself, thereby downloading and installing the appropriate version of renv into the project library. After this has completed, they can then use renv::restore() to restore the project library locally on their machine.
+
+The brief version of the above is as follows:
+
+- setup a project via the instructions in section 2 above.
+- share all the project materials via GitHub (e.g., a collaborator could clone or download).
+- when the new collaborator opens the project for the first time, the right version of renv should automatically downloaded and installed.
+- use renv::restore() to restore the project library locally on their machine.
+
+
