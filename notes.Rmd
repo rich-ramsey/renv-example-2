@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This file tries to describe the process of using renv with git.
 
+See here for notes on collaborating with renv and git: https://rstudio.github.io/renv/articles/collaborating.html
+
 
 1. Describe basic usage here. tbc
 
