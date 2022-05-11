@@ -1,0 +1,88 @@
+---
+title: "setup"
+author: "Richard Ramsey"
+date: '2022-05-11'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This file tries to load packages and then update the renv lock.file and see if it can push successfully to git and github, so that the renv.lock file is also under version control via git.
+
+## initialise renv ##
+
+This should be done already if when you created the R project, you ticked the renv button. If not, it renv will need initialising. 
+
+```{r initialise-renv}
+# renv::init()
+```
+
+## restore renv from a previously saved lock file ##
+
+```{r restore-renv}
+renv::restore()
+```
+
+## load packages that we will be using ##
+
+first time 
+
+```{r}
+# install or load packages
+options(repos="https://cran.rstudio.com" )
+if (!require("install.load")){install.packages("install.load")} 
+install_load("here", "tidyverse", "RColorBrewer", "patchwork")
+```
+
+## do some coding ##
+
+```{r load-some-data}
+data <- as_tibble(mtcars) %>% 
+  mutate(cyl = factor(cyl))
+head(data)
+str(data)
+```
+
+## plot some stuff ##
+
+```{r plot}
+p1 <- ggplot(data, 
+             aes(x=hp, y=mpg, colour=cyl, shape=cyl)) +
+  geom_point() +
+  theme_bw() +
+  scale_colour_brewer(palette = "Dark2") +
+  facet_wrap(~cyl)
+p1
+
+ggsave("figures/p1.jpeg")
+```
+
+## take a snapshot ##
+
+```{r}
+renv::snapshot()
+```
+
+
+close down and restore??
+
+
+
+## load an additional package ##
+
+second time, when the packages will be updated.
+
+```{r}
+# install or load packages
+options(repos="https://cran.rstudio.com" )
+if (!require("install.load")){install.packages("install.load")} 
+install_load("brms")
+```
+
+## take a snapshot ##
+
+```{r}
+renv::snapshot()
+```
