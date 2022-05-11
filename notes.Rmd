@@ -25,3 +25,7 @@ renv::settings$snapshot.type("all")
 <!-- this means that all packages are recorded in snapshot, rather than the default, which is clever and uses renv::dependencies, but may also miss things. Hence, opt for the conservative approach. -->
 
 Now when the project starts these settings are implemented.
+
+3. Something to remember - depending on the snapshot settings, renv.lock will not actually make any changes, even though the file has been updated. e.g., the file has been updated, but no packages have actually changed. Therefore, git will not recognise this as a change because it isn't. 
+
+I have sometimes found this confusing, such that I thought it was not interfacing properly with git.
